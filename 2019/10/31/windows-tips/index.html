@@ -52,15 +52,22 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;index.html">
+  <meta name="description" content="windows问题：PowerShell yarn : 无法加载文件 C:\Users\Admin\AppData\Roaming\npm\yarn.ps1,因为在此系统因为在此系统上禁止运行脚本的问题今天在windows系统上执行yarn之类的命令时突然 报无法加载文件，因为在此系统因为在此系统上禁止运行脚本 错误。本着跟错误死磕到底的精神，科学上网了一波，解决了问题，特此记录一下。">
+<meta name="keywords" content="windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows-tips">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;31&#x2F;windows-tips&#x2F;index.html">
 <meta property="og:site_name" content="Yaw Chen">
+<meta property="og:description" content="windows问题：PowerShell yarn : 无法加载文件 C:\Users\Admin\AppData\Roaming\npm\yarn.ps1,因为在此系统因为在此系统上禁止运行脚本的问题今天在windows系统上执行yarn之类的命令时突然 报无法加载文件，因为在此系统因为在此系统上禁止运行脚本 错误。本着跟错误死磕到底的精神，科学上网了一波，解决了问题，特此记录一下。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-25T09:02:20.952Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;step1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;step2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;step3.png">
+<meta property="og:updated_time" content="2019-10-31T08:06:19.456Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;step1.png">
 
-<link rel="canonical" href="http://yoursite.com/tags/">
+<link rel="canonical" href="http://yoursite.com/2019/10/31/windows-tips/">
 
 
 <script id="page-configurations">
@@ -68,14 +75,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
-    isPage: true,
+    isPost: true,
+    isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>tags | Yaw Chen
-  </title>
+  <title>windows-tips | Yaw Chen</title>
   
 
 
@@ -183,52 +189,120 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
           <div class="content">
             
 
   <div class="posts-expand">
-    
-    
-    
-    <div class="post-block" lang="zh-CN">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">tags
-</h1>
-
-<div class="post-meta">
+      
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/31/windows-tips/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/17722082?s=460&amp;v=4">
+      <meta itemprop="name" content="Yaw Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yaw Chen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          windows-tips
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-10-31 15:59:27 / 修改时间：16:06:19" itemprop="dateCreated datePublished" datetime="2019-10-31T15:59:27+08:00">2019-10-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/" itemprop="url" rel="index">
+                    <span itemprop="name">windows</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h5 id="windows问题：PowerShell-yarn-无法加载文件-C-Users-Admin-AppData-Roaming-npm-yarn-ps1-因为在此系统因为在此系统上禁止运行脚本的问题"><a href="#windows问题：PowerShell-yarn-无法加载文件-C-Users-Admin-AppData-Roaming-npm-yarn-ps1-因为在此系统因为在此系统上禁止运行脚本的问题" class="headerlink" title="windows问题：PowerShell yarn : 无法加载文件 C:\Users\Admin\AppData\Roaming\npm\yarn.ps1,因为在此系统因为在此系统上禁止运行脚本的问题"></a>windows问题：PowerShell yarn : 无法加载文件 C:\Users\Admin\AppData\Roaming\npm\yarn.ps1,因为在此系统因为在此系统上禁止运行脚本的问题</h5><hr><p>今天在windows系统上执行yarn之类的命令时突然 报无法加载文件，因为在此系统因为在此系统上禁止运行脚本 错误。本着跟错误死磕到底的精神，科学上网了一波，解决了问题，特此记录一下。</p><a id="more"></a>
+
+<p>1.打开powershell，以管理员身份运行</p>
+<p><img src="/.com//step1.png" alt="管理员身份运行PowerShell"></p>
+<p>2.若要在本地计算机上运行您编写的未签名脚本和来自其他用户的签名脚本，请使用以下命令将计算机上的 执行策略更改为 RemoteSigned<br>执行：set-ExecutionPolicy RemoteSigned<br>输入 y<br><img src="/.com//step2.png" alt="set-ExecutionPolicy RemoteSigned"></p>
+<p>3、查看执行策略：get-ExecutionPolicy<br><img src="/.com//step3.png" alt="set-ExecutionPolicy RemoteSigned"></p>
+<p>4.关闭命令窗口 即可</p>
+<p>然后就可以愉快的使用命令啦！</p>
+
+    </div>
+
+    
+    
+    
+    
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">----------------本文结束<i class="fa fa-heart"></i>感谢阅读----------------</div>
+    
 </div>
+    
 
-</header>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/windows/" rel="tag"># windows</a>
+          </div>
 
-      
-      
-      
-      <div class="post-body">
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              目前共计 2 个标签
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/10/30/es6-lesson2/" rel="next" title="es6-lesson2">
+                  <i class="fa fa-chevron-left"></i> es6-lesson2
+                </a>
             </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/ES6/" style="font-size: 30px; color: #111">ES6</a> <a href="/tags/windows/" style="font-size: 12px; color: #ccc">windows</a>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
             </div>
           </div>
-        
-      </div>
-      
-      
-      
-    </div>
+      </footer>
     
+  </article>
+  
+  
+  
 
-    
-    
-    
   </div>
 
 
@@ -258,6 +332,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#windows问题：PowerShell-yarn-无法加载文件-C-Users-Admin-AppData-Roaming-npm-yarn-ps1-因为在此系统因为在此系统上禁止运行脚本的问题"><span class="nav-number">1.</span> <span class="nav-text">windows问题：PowerShell yarn : 无法加载文件 C:\Users\Admin\AppData\Roaming\npm\yarn.ps1,因为在此系统因为在此系统上禁止运行脚本的问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
