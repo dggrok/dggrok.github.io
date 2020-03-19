@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="ES2020&amp;#x65B0;&amp;#x7279;&amp;#x6027;&amp;#x6574;&amp;#x7406;JavaScript &amp;#x662F;&amp;#x4E00;&amp;#x95E8;&amp;#x4E0D;&amp;#x65AD;&amp;#x8FED;&amp;#x4EE3;&amp;#x3001;&amp;#x5FEB;&amp;#x901F;&amp;#x53D1;&amp;#x5C55;&amp;#x7684;&amp;#x8BED;&amp;#x8A00;&amp;#xFF0C;&amp;#x81EA; 2015 &amp;">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES2020(ES10)新特性整理">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;ES2020&#x2F;index.html">
+<meta property="og:site_name" content="Yaw Chen">
+<meta property="og:description" content="ES2020&amp;#x65B0;&amp;#x7279;&amp;#x6027;&amp;#x6574;&amp;#x7406;JavaScript &amp;#x662F;&amp;#x4E00;&amp;#x95E8;&amp;#x4E0D;&amp;#x65AD;&amp;#x8FED;&amp;#x4EE3;&amp;#x3001;&amp;#x5FEB;&amp;#x901F;&amp;#x53D1;&amp;#x5C55;&amp;#x7684;&amp;#x8BED;&amp;#x8A00;&amp;#xFF0C;&amp;#x81EA; 2015 &amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-19T01:55:02.659Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/19/ES2020/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>ES2020(ES10)新特性整理 | Yaw Chen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a href="https://github.com/dggrok" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yaw Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/ES2020/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/17722082?s=460&amp;v=4">
+      <meta itemprop="name" content="Yaw Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yaw Chen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ES2020(ES10)新特性整理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-19 09:08:55 / 修改时间：09:55:02" itemprop="dateCreated datePublished" datetime="2020-03-19T09:08:55+08:00">2020-03-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="ES2020&#x65B0;&#x7279;&#x6027;&#x6574;&#x7406;"><a href="#ES2020&#x65B0;&#x7279;&#x6027;&#x6574;&#x7406;" class="headerlink" title="ES2020&#x65B0;&#x7279;&#x6027;&#x6574;&#x7406;"></a>ES2020&#x65B0;&#x7279;&#x6027;&#x6574;&#x7406;</h4><p>JavaScript &#x662F;&#x4E00;&#x95E8;&#x4E0D;&#x65AD;&#x8FED;&#x4EE3;&#x3001;&#x5FEB;&#x901F;&#x53D1;&#x5C55;&#x7684;&#x8BED;&#x8A00;&#xFF0C;&#x81EA; 2015 &#x5E74; ES2015&#xFF08;ES6&#xFF09;&#x9762;&#x4E16;&#x4EE5;&#x6765;&#xFF0C;&#x8BB8;&#x591A;&#x65B0;&#x7279;&#x6027;&#x5C06;&#x4EE5;&#x524D;&#x6240;&#x672A;&#x6709;&#x7684;&#x901F;&#x5EA6;&#x88AB;&#x6574;&#x5408;&#x5230;&#x73B0;&#x4EE3;&#x6D4F;&#x89C8;&#x5668;&#x548C;&#x5176;&#x4ED6; JavaScript &#x8FD0;&#x884C;&#x65F6;&#x5F15;&#x64CE;&#xFF08;&#x4F8B;&#x5982; Node.js&#xFF09;&#x4E2D;&#x3002;&#x4ECA;&#x5929;&#x5C31;&#x5E26;&#x5927;&#x5BB6;&#x770B;&#x4E00;&#x770B; ES2020&#xFF08;ES10&#xFF09; &#x65B0;&#x589E;&#x7684;&#x4E00;&#x4E9B;&#x6700;&#x65B0;&#x548C;&#x6700;&#x51FA;&#x8272;&#x7684;&#x7279;&#x6027;&#x3002;</p><a id="more"></a>
+<h5 id="1-Private-Class-Variables-&#x7C7B;&#x7684;&#x79C1;&#x6709;&#x5B57;&#x6BB5;"><a href="#1-Private-Class-Variables-&#x7C7B;&#x7684;&#x79C1;&#x6709;&#x5B57;&#x6BB5;" class="headerlink" title="1.Private Class Variables(&#x7C7B;&#x7684;&#x79C1;&#x6709;&#x5B57;&#x6BB5;)"></a>1.Private Class Variables(&#x7C7B;&#x7684;&#x79C1;&#x6709;&#x5B57;&#x6BB5;)</h5><blockquote>
+<p>&#x7C7B;&#x7684;&#x4E00;&#x4E2A;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x5C06;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#x4EE5;&#x4FBF;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x6A21;&#x5757;&#x4E2D;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x3002;&#x5F53;&#x9700;&#x8981;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5730;&#x65B9;&#x8C03;&#x7528;&#x76F8;&#x540C;&#x7684;&#x529F;&#x80FD;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x8003;&#x8651;&#x5C06;&#x8BE5;&#x529F;&#x80FD;&#x5C01;&#x88C5;&#x6210;&#x4E00;&#x4E2A;&#x7C7B;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5C06;&#x6240;&#x6709;&#x7684;&#x4E1C;&#x897F;&#x90FD;&#x505A;&#x6210;&#x5168;&#x5C40;&#x7684;&#x4EE5;&#x65B9;&#x4FBF;&#x8C03;&#x7528;&#xFF0C;&#x8FD9;&#x6837;&#x5BB9;&#x6613;&#x5F15;&#x8D77;&#x4EE3;&#x7801;&#x6DF7;&#x4E71;&#x3002;&#x73B0;&#x5728;&#xFF0C;&#x901A;&#x8FC7;&#x5728;&#x53D8;&#x91CF;&#x6216;&#x8005;&#x65B9;&#x6CD5;&#x524D;&#x9762;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x54C8;&#x5E0C;&#x7B26;&#x53F7;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x9650;&#x5236;&#x7C7B;&#x7684;&#x53D8;&#x91CF;&#x6216;&#x8005;&#x65B9;&#x6CD5;&#x53EA;&#x80FD;&#x5728;&#x7C7B;&#x7684;&#x5185;&#x90E8;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x3002;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>{</span><br><span class="line">    #brand = &apos;BMW&apos;</span><br><span class="line"></span><br><span class="line">    run(){</span><br><span class="line">        console.log(this.#brand)</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newCar = <span class="keyword">new</span> Car()</span><br><span class="line"></span><br><span class="line">newCar.run()<span class="comment">// BMW</span></span><br><span class="line">console.log(newCar.#brand) // &#x79C1;&#x6709;&#x53D8;&#x91CF; #brand is not defined</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-Promise-allSettled"><a href="#2-Promise-allSettled" class="headerlink" title="2.Promise.allSettled"></a>2.Promise.allSettled</h5><blockquote>
+<p>&#x6211;&#x4EEC;&#x77E5;&#x9053;Promise.all&#x5177;&#x6709;&#x5E76;&#x53D1;&#x6267;&#x884C;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x53C2;&#x6570;&#x4E2D;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;promise&#x8FD4;&#x56DE;reject&#xFF0C;&#x90A3;&#x4E48;&#x6574;&#x4E2A;Promise.all&#x8C03;&#x7528;&#x4F1A;&#x7ACB;&#x523B;&#x505C;&#x6B62;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;reject&#x7684;&#x65B0;Promise&#x5BF9;&#x8C61;&#x3002;<br>Promise.allSettled &#x8DDF; Promise.all &#x7C7B;&#x4F3C;, &#x4E0D;&#x540C;&#x4E4B;&#x5904;&#x5728;&#x4E8E;&#xFF0C;&#x5B83;&#x4E0D;&#x4F1A;&#x8FDB;&#x884C;&#x77ED;&#x8DEF;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5F53; Promise &#x5168;&#x90E8;&#x5904;&#x7406;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x62FF;&#x5230;&#x6BCF;&#x4E2A; Promise &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x800C;&#x4E0D;&#x7BA1;&#x662F;&#x5426;&#x5904;&#x7406;&#x6210;&#x529F;&#x3002;&#x5B83;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x4EE5;&#x63D0;&#x4F9B;&#x6240;&#x6709;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;promise&#x7684;&#x76F8;&#x5173;&#x6570;&#x636E;&#x3002;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> setTimeout(res, <span class="number">1000</span>));</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> setTimeout(rej, <span class="number">1000</span>));</span><br><span class="line"><span class="built_in">Promise</span>.allSettled([p1, p2]).then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br><span class="line"><span class="comment">/*&#x6253;&#x5370;</span></span><br><span class="line"><span class="comment">[</span></span><br><span class="line"><span class="comment">    Object { status: &quot;fulfilled&quot;, value: undefined},</span></span><br><span class="line"><span class="comment">    Object { status: &quot;rejected&quot;, value: undefined}</span></span><br><span class="line"><span class="comment">]</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-Nullish-Coalescing-Operator&#xFF08;&#x7A7A;&#x503C;&#x5408;&#x5E76;&#x8FD0;&#x7B97;&#x7B26;&#xFF09;"><a href="#3-Nullish-Coalescing-Operator&#xFF08;&#x7A7A;&#x503C;&#x5408;&#x5E76;&#x8FD0;&#x7B97;&#x7B26;&#xFF09;" class="headerlink" title="3.Nullish Coalescing Operator&#xFF08;&#x7A7A;&#x503C;&#x5408;&#x5E76;&#x8FD0;&#x7B97;&#x7B26;&#xFF09;"></a>3.Nullish Coalescing Operator&#xFF08;&#x7A7A;&#x503C;&#x5408;&#x5E76;&#x8FD0;&#x7B97;&#x7B26;&#xFF09;</h5><p>&#x56E0;&#x4E3A; JavaScript &#x662F;&#x52A8;&#x6001;&#x7C7B;&#x578B;&#xFF0C;&#x5728;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x7262;&#x8BB0; JavaScript &#x5BF9; true/false &#x503C;&#x7684;&#x5904;&#x7406;&#x3002;&#x5047;&#x8BBE;&#x6709;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x65F6;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x4F2A;&#x503C;&#xFF0C;&#x4F8B;&#x5982;&#x201C;&#x7A7A;&#x5B57;&#x7B26;&#x4E32;&#x201C;&#x6216;&#x201C;0&#x201D;&#x3002;&#x8FD9;&#x65F6;&#x5019;&#xFF0C;&#x5229;&#x7528;||&#x8FD0;&#x7B97;&#x7B26;&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x503C;&#x4F1A;&#x4EA7;&#x751F;&#x76F8;&#x53CD;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x56E0;&#x4E3A;&#x9ED8;&#x8BA4;&#x503C;&#x4F1A;&#x8986;&#x76D6;&#x539F;&#x6765;&#x6709;&#x6548;&#x7684;&#x503C;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> person = {</span><br><span class="line">    profile:{</span><br><span class="line">        name:<span class="string">&apos;&apos;</span>,</span><br><span class="line">        age:<span class="number">0</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="built_in">console</span>.log(person.profile.name || <span class="string">&quot;Anonymous&quot;</span>); </span><br><span class="line"><span class="comment">// &#x6B64;&#x5904;&#x60F3;&#x8981;&#x8F93;&#x51FA;&#x7684;&#x662F; &#x7A7A;&#x5B57;&#x7B26;&#xFF0C;&#x800C;&#x975E; Anonymous</span></span><br><span class="line"><span class="built_in">console</span>.log(person.profile.age || <span class="number">18</span>); </span><br><span class="line"><span class="comment">// &#x6B64;&#x5904;&#x60F3;&#x8981;&#x8F93;&#x51FA;&#x7684;&#x662F; 0&#xFF0C;&#x800C;&#x975E; 18</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x8FD9;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; ES2020 &#x7684;&#x65B0;&#x7279;&#x6027;&#xFF1A;&#x7A7A;&#x4F4D;&#x5408;&#x5E76;&#x8FD0;&#x7B97;&#x7B26; ?? &#x3002;&#x53CC;&#x95EE;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#x5177;&#x6709;&#x66F4;&#x4E25;&#x683C;&#x7684;&#x7C7B;&#x578B;&#x68C0;&#x67E5;&#xFF0C;&#x5B83;&#x53EA;&#x5141;&#x8BB8;&#x503C;&#x4E3A;null&#x6216;&#x8005;undefined&#x7684;&#x65F6;&#x5019;&#x624D;&#x4F1A;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x503C;&#x3002;0&#x6216;&#x8005;&#x7A7A;&#x5B57;&#x7B26;&#x4E32;&#x90FD;&#x4E0D;&#x4F1A;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x503C;&#x3002;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(person.profile.name ?? <span class="string">&quot;Anonymous&quot;</span>); <span class="comment">// &quot;&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.profile.age ?? <span class="number">18</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-Optional-Chaining-Operator-&#x53EF;&#x9009;&#x94FE;&#x5F0F;&#x64CD;&#x4F5C;&#x7B26;"><a href="#4-Optional-Chaining-Operator-&#x53EF;&#x9009;&#x94FE;&#x5F0F;&#x64CD;&#x4F5C;&#x7B26;" class="headerlink" title="4.Optional Chaining Operator(&#x53EF;&#x9009;&#x94FE;&#x5F0F;&#x64CD;&#x4F5C;&#x7B26;)"></a>4.Optional Chaining Operator(&#x53EF;&#x9009;&#x94FE;&#x5F0F;&#x64CD;&#x4F5C;&#x7B26;)</h5><p>&#x548C;&#x7A7A;&#x503C;&#x5408;&#x5E76;&#x8FD0;&#x7B97;&#x7B26;&#x7684;&#x60C5;&#x51B5;&#x4E00;&#x6837;&#xFF0C;&#x5F53;JavaScript&#x9047;&#x5230;&#x5047;&#x503C;&#x7684;&#x60C5;&#x51B5;&#x65F6;&#x4E0D;&#x4F1A;&#x4E0D;&#x4F1A;&#x8868;&#x73B0;&#x5F97;&#x5411;&#x6211;&#x4EEC;&#x9884;&#x60F3;&#x5F97;&#x90A3;&#x6837;&#x3002;&#x5F53;&#x9047;&#x5230;&#x4E00;&#x4E2A;undefined&#x7684;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7684;&#x8BBF;&#x95EE;&#x8DEF;&#x5F84;&#x672C;&#x8EAB;&#x5C31;&#x4E00;&#x4E2A;undefined&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8BE5;&#x600E;&#x4E48;&#x529E;&#x5462;&#xFF1F;<br>&#x901A;&#x8FC7;&#x5728;&#x70B9;&#x53F7;&#x524D;&#x9762;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x95EE;&#x53F7;&#x6807;&#x8BB0;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x786E;&#x4FDD;&#x4E0D;&#x7BA1;&#x8DEF;&#x5F84;&#x4E2D;&#x4EFB;&#x4F55;&#x90E8;&#x5206;&#x662F;undefined&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x80FD;&#x6B63;&#x786E;&#x4F18;&#x96C5;&#x5730;&#x5904;&#x7406;&#x5B83;&#x3002;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> person = {};</span><br><span class="line"><span class="built_in">console</span>.log(person.profile.name ?? <span class="string">&quot;Anonymous&quot;</span>); </span><br><span class="line"><span class="comment">//person.profile is undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(person?.profile?.name ?? <span class="string">&quot;Anonymous&quot;</span>); <span class="comment">//Anonymous</span></span><br><span class="line"><span class="built_in">console</span>.log(person?.profile?.age ?? <span class="number">18</span>); <span class="comment">//18</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="5-BigInt-&#x5927;&#x6574;&#x578B;"><a href="#5-BigInt-&#x5927;&#x6574;&#x578B;" class="headerlink" title="5. BigInt(&#x5927;&#x6574;&#x578B;)"></a>5. BigInt(&#x5927;&#x6574;&#x578B;)</h5><p>Javascript &#x53EF;&#x4EE5;&#x5904;&#x7406;&#x7684;&#x6700;&#x5927;&#x6570;&#x5B57;&#x662F; 2^53&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x67E5;&#x770B; MAX_SAFE_INTEGER</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> max = <span class="built_in">Number</span>.MAX_SAFE_INTEGER;</span><br><span class="line"><span class="built_in">console</span>.log(max); <span class="comment">// 9007199254740991</span></span><br></pre></td></tr></table></figure>
+<p>&#x8D85;&#x51FA;&#x8FD9;&#x4E2A;&#x8303;&#x56F4;&#x7684;&#x6574;&#x6570;&#x8BA1;&#x7B97;&#x5C31;&#x4F1A;&#x53D8;&#x5F97;&#x5F88;&#x5947;&#x602A;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(max + <span class="number">1</span>); <span class="comment">// 9007199254740992</span></span><br><span class="line"><span class="built_in">console</span>.log(max + <span class="number">2</span>); <span class="comment">// 9007199254740992</span></span><br><span class="line"><span class="built_in">console</span>.log(max + <span class="number">3</span>); <span class="comment">// 9007199254740994</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">53</span>) == <span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">53</span>) + <span class="number">1</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x7528;BitInt&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#x3002;&#x901A;&#x8FC7;&#x5C06;&#x5B57;&#x7B26;n&#x7F6E;&#x4E8E;&#x7B97;&#x672F;&#x8868;&#x8FBE;&#x5F0F;&#x540E;&#x9762;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x4F7F;&#x7528;&#x548C;&#x8BA1;&#x7B97;&#x771F;&#x6B63;&#x53D8;&#x6001;&#x7EA7;&#x5927;&#x6570;&#x503C;&#x3002;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x6DF7;&#x6DC6;&#x666E;&#x901A;&#x7684;&#x6570;&#x503C;&#x548C;BitInt&#x6570;&#x503C;&#xFF0C;&#x56E0;&#x6B64;&#x6240;&#x6709;&#x5173;&#x4E8E;&#x6570;&#x503C;&#x8BA1;&#x7B97;&#x7684;&#x7684;&#x51FD;&#x6570;&#x90FD;&#x9700;&#x8981;&#x4EE5;BigInt&#x7684;&#x7C7B;&#x578B;&#x518D;&#x5B9E;&#x73B0;&#x4E00;&#x904D;&#x3002;&#x53C2;&#x8003;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bigNum = <span class="number">1000000000000000000000000000000</span>n;</span><br><span class="line"><span class="built_in">console</span>.log(bigNum * <span class="number">2</span>n); <span class="comment">//2000000000000000000000000000000n</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="6-Dynamic-Import-&#x52A8;&#x6001;&#x5F15;&#x5165;"><a href="#6-Dynamic-Import-&#x52A8;&#x6001;&#x5F15;&#x5165;" class="headerlink" title="6. Dynamic Import(&#x52A8;&#x6001;&#x5F15;&#x5165;)"></a>6. Dynamic Import(&#x52A8;&#x6001;&#x5F15;&#x5165;)</h5><p>&#x5982;&#x679C;&#x4F60;&#x6709;&#x4E00;&#x4E2A;&#x529F;&#x80FD;&#x5F88;&#x5B8C;&#x5584;&#x7684;&#x529F;&#x80FD;&#x6A21;&#x5757;&#x6587;&#x4EF6;&#xFF0C;&#x4F46;&#x5176;&#x4E2D;&#x67D0;&#x4E9B;&#x529F;&#x80FD;&#x53EF;&#x80FD;&#x5F88;&#x5C11;&#x4F7F;&#x7528;&#xFF0C;&#x5BFC;&#x5165;&#x8FD9;&#x4E9B;&#x6240;&#x6709;&#x4F9D;&#x8D56;&#x9879;&#x53EF;&#x80FD;&#x4F1A;&#x6D6A;&#x8D39;&#x5F88;&#x591A;&#x65F6;&#x95F4;&#x3002;&#x73B0;&#x5728;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; async / await &#x5728;&#x9700;&#x8981;&#x65F6;&#x624D;&#x52A8;&#x6001;&#x5BFC;&#x5165;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x9879;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> add = <span class="function">(<span class="params">num1, num2</span>) =&gt;</span> num1 + num2;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">export</span> { add };</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> doMath = <span class="keyword">async</span> (num1, num2) =&gt; {</span><br><span class="line">  <span class="keyword">if</span> (num1 &amp;&amp; num2) {</span><br><span class="line">    <span class="keyword">const</span> math = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&apos;./math.js&apos;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(math.add(<span class="number">5</span>, <span class="number">10</span>));</span><br><span class="line">  };</span><br><span class="line">};</span><br><span class="line"> </span><br><span class="line">doMath(<span class="number">4</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<h5 id="&#x53C2;&#x8003;"><a href="#&#x53C2;&#x8003;" class="headerlink" title="&#x53C2;&#x8003;"></a>&#x53C2;&#x8003;</h5><p><a href="https://alligator.io/js/es2020/" target="_blank" rel="noopener"> What&#x2019;s new in ECMAScript 2020 (ES2020) </a><br><a href="https://yehuzi.com/whats-new-in-es2020/" target="_blank" rel="noopener"> ES2020(ES10)&#x90FD;&#x6709;&#x54EA;&#x4E9B;&#x65B0;&#x7279;&#x6027; </a></p>
+
+    </div>
+
+    
+    
+    
+    
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">----------------本文结束<i class="fa fa-heart"></i>感谢阅读----------------</div>
+    
+</div>
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/26/vue-tips1/" rel="next" title="Vue项目中使用elementUI表单验证非element元素的验证">
+                  <i class="fa fa-chevron-left"></i> Vue项目中使用elementUI表单验证非element元素的验证
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ES2020新特性整理"><span class="nav-number">1.</span> <span class="nav-text">ES2020新特性整理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Private-Class-Variables-类的私有字段"><span class="nav-number">1.1.</span> <span class="nav-text">1.Private Class Variables(类的私有字段)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Promise-allSettled"><span class="nav-number">1.2.</span> <span class="nav-text">2.Promise.allSettled</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Nullish-Coalescing-Operator（空值合并运算符）"><span class="nav-number">1.3.</span> <span class="nav-text">3.Nullish Coalescing Operator（空值合并运算符）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Optional-Chaining-Operator-可选链式操作符"><span class="nav-number">1.4.</span> <span class="nav-text">4.Optional Chaining Operator(可选链式操作符)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-BigInt-大整型"><span class="nav-number">1.5.</span> <span class="nav-text">5. BigInt(大整型)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Dynamic-Import-动态引入"><span class="nav-number">1.6.</span> <span class="nav-text">6. Dynamic Import(动态引入)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考"><span class="nav-number">1.7.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Yaw Chen"
+    src="https://avatars3.githubusercontent.com/u/17722082?s=460&amp;v=4">
+  <p class="site-author-name" itemprop="name">Yaw Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dggrok" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;dggrok" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:13641772927@163.com" title="E-Mail &amp;rarr; mailto:13641772927@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020-03-19</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yaw Chen</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.6' zIndex='-1' count='120' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小桃心-->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
+
