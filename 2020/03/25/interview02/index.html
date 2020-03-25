@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;#x5B9E;&amp;#x73B0;&amp;#x6D45;&amp;#x62F7;&amp;#x8D1D;&amp;#x548C;&amp;#x6DF1;&amp;#x62F7;&amp;#x8D1D; &amp;#x6D45;&amp;#x62F7;&amp;#x8D1D;&amp;#xFF1A; &amp;#x53EA;&amp;#x662F;&amp;#x590D;&amp;#x5236;&amp;#x4E86;&amp;#x6307;&amp;#x5411;&amp;#x67D0;&amp;#x4E2A;&amp;#x5BF9;&amp;#x8C61;&amp;#x768">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js面试中高频出现的手写代码系列(一)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;25&#x2F;interview02&#x2F;index.html">
+<meta property="og:site_name" content="Yaw Chen">
+<meta property="og:description" content="&amp;#x5B9E;&amp;#x73B0;&amp;#x6D45;&amp;#x62F7;&amp;#x8D1D;&amp;#x548C;&amp;#x6DF1;&amp;#x62F7;&amp;#x8D1D; &amp;#x6D45;&amp;#x62F7;&amp;#x8D1D;&amp;#xFF1A; &amp;#x53EA;&amp;#x662F;&amp;#x590D;&amp;#x5236;&amp;#x4E86;&amp;#x6307;&amp;#x5411;&amp;#x67D0;&amp;#x4E2A;&amp;#x5BF9;&amp;#x8C61;&amp;#x768">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-25T07:13:14.762Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/25/interview02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>js面试中高频出现的手写代码系列(一) | Yaw Chen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a href="https://github.com/dggrok" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yaw Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/25/interview02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/17722082?s=460&amp;v=4">
+      <meta itemprop="name" content="Yaw Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yaw Chen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js面试中高频出现的手写代码系列(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-25 10:21:21 / 修改时间：15:13:14" itemprop="dateCreated datePublished" datetime="2020-03-25T10:21:21+08:00">2020-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="&#x5B9E;&#x73B0;&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;"><a href="#&#x5B9E;&#x73B0;&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;" class="headerlink" title="&#x5B9E;&#x73B0;&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;"></a>&#x5B9E;&#x73B0;&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;</h4><blockquote>
+<p>&#x6D45;&#x62F7;&#x8D1D;&#xFF1A; &#x53EA;&#x662F;&#x590D;&#x5236;&#x4E86;&#x6307;&#x5411;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x590D;&#x5236;&#x5BF9;&#x8C61;&#x7684;&#x503C;&#xFF0C;&#x65B0;&#x65E7;&#x5BF9;&#x8C61;&#x8FD8;&#x662F;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x3002;&#x4E00;&#x822C;&#x51FA;&#x73B0;&#x5728;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E3A;&#x5BF9;&#x8C61;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x57FA;&#x672C;&#x4E0A;&#x7C7B;&#x578B;Number&#x3001;String&#x3001;Boolean&#x662F;&#x6309;&#x503C;&#x4F20;&#x9012;&#xFF0C;&#x800C;&#x5BF9;&#x8C61;&#x662F;&#x6309;&#x5F15;&#x7528;&#x4F20;&#x503C;&#x3002;</p>
+</blockquote><a id="more"></a>
+<h5 id="&#x6D45;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;"><a href="#&#x6D45;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;" class="headerlink" title="&#x6D45;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;"></a>&#x6D45;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;</h5><h6 id="1-&#x76F4;&#x63A5;&#x8D4B;&#x503C;"><a href="#1-&#x76F4;&#x63A5;&#x8D4B;&#x503C;" class="headerlink" title="1.&#x76F4;&#x63A5;&#x8D4B;&#x503C;"></a>1.&#x76F4;&#x63A5;&#x8D4B;&#x503C;</h6> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = {<span class="attr">username</span>: <span class="string">&apos;xiaoming&apos;</span>, <span class="attr">age</span>: <span class="number">29</span>, <span class="attr">sex</span>: {<span class="attr">option1</span>: <span class="string">&apos;&#x7537;&apos;</span>, <span class="attr">option2</span>: <span class="string">&apos;&#x5973;&apos;</span>}};</span><br><span class="line"> <span class="keyword">let</span> obj1 = obj;</span><br><span class="line"> obj1.sex.option1 = <span class="string">&apos;&#x672A;&#x77E5;&apos;</span>; <span class="comment">// &#x4FEE;&#x6539;&#x590D;&#x5236;&#x7684;&#x5BF9;&#x8C61;&#x4F1A;&#x5F71;&#x54CD;&#x539F;&#x5BF9;&#x8C61;</span></span><br><span class="line"> <span class="built_in">console</span>.log(obj1, obj);</span><br></pre></td></tr></table></figure>
+<h6 id="2-Object-assign"><a href="#2-Object-assign" class="headerlink" title="2.Object.assign()"></a>2.Object.assign()</h6> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = {<span class="attr">username</span>: <span class="string">&apos;xiaoming&apos;</span>};</span><br><span class="line"> <span class="keyword">let</span> obj1 = <span class="built_in">Object</span>.assign(obj);</span><br><span class="line"> obj1.username = <span class="string">&apos;laowan&apos;</span>; </span><br><span class="line"> <span class="built_in">console</span>.log(obj);<span class="comment">// username : laowan</span></span><br></pre></td></tr></table></figure>
+<h6 id="3-Array-prototype-slice-&#x548C;Array-prototype-concat"><a href="#3-Array-prototype-slice-&#x548C;Array-prototype-concat" class="headerlink" title="3.Array.prototype.slice()&#x548C;Array.prototype.concat()"></a>3.Array.prototype.slice()&#x548C;Array.prototype.concat()</h6>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,{<span class="attr">userName</span>:<span class="string">&apos;xiaoming&apos;</span>}];</span><br><span class="line"> <span class="keyword">let</span> arr1 = arr.concat();</span><br><span class="line"> arr1[<span class="number">2</span>].userName = <span class="string">&apos;laowan&apos;</span></span><br><span class="line"> <span class="built_in">console</span>.log(arr);<span class="comment">//arr[2].userName &apos;laowan&apos;</span></span><br><span class="line">-----------------------</span><br><span class="line">  <span class="keyword">let</span> arr2 = arr.slice();</span><br><span class="line">  arr2[<span class="number">2</span>].userName = <span class="string">&apos;lisi&apos;</span></span><br><span class="line">  <span class="built_in">console</span>.log(arr);<span class="comment">//arr[2].userName &apos;lisi&apos;</span></span><br></pre></td></tr></table></figure>
+<p> &#x5907;&#x6CE8;&#xFF1A;&#x8FD9;&#x91CC;&#x6570;&#x7EC4;&#x7684;slice,concat&#x65B9;&#x6CD5;&#x53EA;&#x80FD;&#x5B9E;&#x73B0;&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x7684;&#x6DF1;&#x62F7;&#x8D1D;&#xFF0C;&#x5E26;&#x6709;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x5219;&#x662F;&#x6D45;&#x62F7;&#x8D1D;&#x4E86;&#x3002;</p>
+<blockquote>
+<p>&#x6DF1;&#x62F7;&#x8D1D;&#xFF1A;&#x91CD;&#x65B0;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x76F8;&#x540C;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x65B0;&#x5BF9;&#x8C61;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x6307;&#x9488;&#x548C;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x591A;&#x6B21;&#x4F7F;&#x7528;&#x540C;&#x6837;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6570;&#x636E;&#x4FEE;&#x6539;&#x540E;&#x4E5F;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x9519;&#x4E71;&#x3002;</p>
+</blockquote>
+<h5 id="&#x6DF1;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;"><a href="#&#x6DF1;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;" class="headerlink" title="&#x6DF1;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;"></a>&#x6DF1;&#x62F7;&#x8D1D;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;</h5><h6 id="1-&#x901A;&#x8FC7;JSON&#x8F6C;&#x6362;&#x6765;&#x5B9E;&#x73B0;"><a href="#1-&#x901A;&#x8FC7;JSON&#x8F6C;&#x6362;&#x6765;&#x5B9E;&#x73B0;" class="headerlink" title="1.&#x901A;&#x8FC7;JSON&#x8F6C;&#x6362;&#x6765;&#x5B9E;&#x73B0;"></a>1.&#x901A;&#x8FC7;JSON&#x8F6C;&#x6362;&#x6765;&#x5B9E;&#x73B0;</h6> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = {<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: {<span class="attr">x</span>: <span class="number">3</span>}}</span><br><span class="line"><span class="keyword">const</span> copy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj))</span><br></pre></td></tr></table></figure>
+<p> &#x7F3A;&#x70B9;&#xFF1A;</p>
+<ul>
+<li><p>&#x5BF9;&#x4E8E; function&#x3001;undefined&#xFF0C;&#x4F1A;&#x4E22;&#x5931;&#x8FD9;&#x4E9B;&#x5C5E;&#x6027;&#x3002;</p>
+</li>
+<li><p>&#x5BF9;&#x4E8E; RegExp&#x3001;Error &#x5BF9;&#x8C61;&#xFF0C;&#x53EA;&#x4F1A;&#x5F97;&#x5230;&#x7A7A;&#x5BF9;&#x8C61;</p>
+</li>
+<li><p>&#x5BF9;&#x4E8E; date &#x5BF9;&#x8C61;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x662F; string&#xFF0C;&#x800C;&#x4E0D;&#x662F; date &#x5BF9;&#x8C61;</p>
+</li>
+<li><p>&#x5BF9;&#x4E8E; NaN&#x3001;Infinity&#x3001;-Infinity&#xFF0C;&#x4F1A;&#x53D8;&#x6210; null&#x65E0;&#x6CD5;&#x5904;&#x7406;&#x5FAA;&#x73AF;&#x5F15;&#x7528;</p>
+<h6 id="2-&#x901A;&#x8FC7;&#x9012;&#x5F52;&#x6765;&#x5B9E;&#x73B0;"><a href="#2-&#x901A;&#x8FC7;&#x9012;&#x5F52;&#x6765;&#x5B9E;&#x73B0;" class="headerlink" title="2.&#x901A;&#x8FC7;&#x9012;&#x5F52;&#x6765;&#x5B9E;&#x73B0;"></a>2.&#x901A;&#x8FC7;&#x9012;&#x5F52;&#x6765;&#x5B9E;&#x73B0;</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">obj</span>)</span>{</span><br><span class="line">    <span class="keyword">let</span> copy = <span class="built_in">Array</span>.isArray(obj) ? [] : {}</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> obj){</span><br><span class="line">        <span class="keyword">if</span>(obj.hasOwnProperty(i)){</span><br><span class="line">            copy[i] = <span class="keyword">typeof</span> obj[i] === <span class="string">&apos;object&apos;</span> ? deepClone(obj[i]) : obj[i]</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> copy</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4EE5;&#x4E0A;&#x5B9E;&#x73B0;&#xFF0C;&#x9488;&#x5BF9;&#x5E38;&#x7528;&#x7684;JS&#x7C7B;&#x578B;&#xFF08;&#x57FA;&#x7840;&#x7C7B;&#x578B;&#x3001;&#x6570;&#x7EC4;&#x3001;&#x5BF9;&#x8C61;&#xFF09;&#xFF0C;&#x867D;&#x7136;&#x89E3;&#x51B3;&#x4E86;&#x5927;&#x90E8;&#x5206;JSON.parse(JSON.stringify(oldObj))&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x4F9D;&#x7136;&#x65E0;&#x6CD5;&#x89E3;&#x51B3;&#x5FAA;&#x73AF;&#x5F15;&#x7528;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj, cache = []</span>)</span>{</span><br><span class="line">    <span class="comment">// typeof [] =&gt; &apos;object&apos;</span></span><br><span class="line">    <span class="comment">// typeof {} =&gt; &apos;object&apos;</span></span><br><span class="line">    <span class="keyword">if</span>(obj === <span class="literal">null</span> || <span class="keyword">typeof</span> obj !== <span class="string">&apos;object&apos;</span>){</span><br><span class="line">        <span class="keyword">return</span> obj</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// &#x5982;&#x679C;&#x4F20;&#x5165;&#x7684;&#x5BF9;&#x8C61;&#x4E0E;&#x7F13;&#x5B58;&#x7684;&#x76F8;&#x7B49;, &#x5219;&#x9012;&#x5F52;&#x7ED3;&#x675F;, &#x8FD9;&#x6837;&#x9632;&#x6B62;&#x5FAA;&#x73AF;</span></span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * &#x7C7B;&#x4F3C;&#x4E0B;&#x9762;&#x8FD9;&#x79CD;</span></span><br><span class="line"><span class="comment">   * var a = {b:1}</span></span><br><span class="line"><span class="comment">   * a.c = a</span></span><br><span class="line"><span class="comment">   * &#x8D44;&#x6599;: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">    <span class="keyword">const</span> hit = cache.filter(<span class="function"><span class="params">c</span>=&gt;</span> c.original === obj)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span>(hit){</span><br><span class="line">        <span class="keyword">return</span> hit.copy</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> copy = <span class="built_in">Array</span>.isArray(obj) ? [] : {}</span><br><span class="line">    <span class="comment">// &#x5C06;copy&#x9996;&#x5148;&#x653E;&#x5165;cache, &#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728;&#x9012;&#x5F52;deepCopy&#x7684;&#x65F6;&#x5019;&#x5F15;&#x7528;&#x5B83;</span></span><br><span class="line">    cache.push({</span><br><span class="line">        original: obj,</span><br><span class="line">        copy</span><br><span class="line">    })</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span>=&gt;</span>{</span><br><span class="line">        copy[key] = deepCopy(obj[key],cache)</span><br><span class="line">    })</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> copy</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4EE5;&#x4E0A;&#x5B9E;&#x73B0;&#xFF0C;&#x53C2;&#x8003;vuex&#x7684;deepCopy&#x6E90;&#x7801;&#xFF0C;&#x89E3;&#x51B3;&#x5FAA;&#x73AF;&#x5F15;&#x7528;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mapTag = <span class="string">&apos;[object Map]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> setTag = <span class="string">&apos;[object Set]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> arrayTag = <span class="string">&apos;[object Array]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> objectTag = <span class="string">&apos;[object Object]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> argsTag = <span class="string">&apos;[object Arguments]&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> boolTag = <span class="string">&apos;[object Boolean]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> dateTag = <span class="string">&apos;[object Date]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> numberTag = <span class="string">&apos;[object Number]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> stringTag = <span class="string">&apos;[object String]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> symbolTag = <span class="string">&apos;[object Symbol]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> errorTag = <span class="string">&apos;[object Error]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> regexpTag = <span class="string">&apos;[object RegExp]&apos;</span>;</span><br><span class="line"><span class="keyword">const</span> funcTag = <span class="string">&apos;[object Function]&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> deepTag = [mapTag, setTag, arrayTag, objectTag, argsTag];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">array, iteratee</span>) </span>{</span><br><span class="line">  <span class="keyword">let</span> index = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">const</span> length = array.length;</span><br><span class="line">  <span class="keyword">while</span> (++index &lt; length) {</span><br><span class="line">    iteratee(array[index], index);</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x5224;&#x65AD;&#x662F;&#x5426;&#x4E3A;&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isObject</span>(<span class="params">target</span>)</span>{</span><br><span class="line">    <span class="keyword">const</span> type = <span class="keyword">typeof</span> target;</span><br><span class="line">    <span class="keyword">return</span> target !== <span class="literal">null</span> &amp;&amp; (type === <span class="string">&apos;object&apos;</span> || type === <span class="string">&apos;function&apos;</span>)</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x83B7;&#x53D6;&#x7CBE;&#x786E;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">target</span>) </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(target);</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x76EE;&#x6807;&#x5BF9;&#x8C61;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getInit</span>(<span class="params">target</span>) </span>{</span><br><span class="line">  <span class="keyword">const</span> Ctor = target.constructor;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Ctor();</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x514B;&#x9686;Symbol&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneSymbol</span>(<span class="params">target</span>) </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>(<span class="built_in">Symbol</span>.prototype.valueOf.call(target));</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x514B;&#x9686;&#x6B63;&#x5219;&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneReg</span>(<span class="params">target</span>) </span>{</span><br><span class="line">  <span class="keyword">const</span> reFlags = <span class="regexp">/\w*$/</span>;</span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">new</span> targe.constructor(target.source, reFlags.exec(target));</span><br><span class="line">  result.lastIndex = targe.lastIndex;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x514B;&#x9686;&#x51FD;&#x6570;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneFunction</span>(<span class="params">func</span>) </span>{</span><br><span class="line">  <span class="keyword">const</span> bodyReg = <span class="regexp">/(?&lt;={)(.|\n)+(?=})/m</span>;</span><br><span class="line">  <span class="keyword">const</span> paramReg = <span class="regexp">/(?&lt;=\().+(?=\)\s+{)/</span>;</span><br><span class="line">  <span class="keyword">const</span> funcString = func.toString();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (func.prototype) {</span><br><span class="line">    <span class="keyword">const</span> param = paramReg.exec(funcString);</span><br><span class="line">    <span class="keyword">const</span> body = bodyReg.exec(funcString);</span><br><span class="line">    <span class="keyword">if</span> (body) {</span><br><span class="line">      <span class="keyword">if</span> (param) {</span><br><span class="line">        <span class="keyword">const</span> paramArr = param[<span class="number">0</span>].split(<span class="string">&apos;,&apos;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(...paramArr, body[<span class="number">0</span>]);</span><br><span class="line">      } <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(body[<span class="number">0</span>]);</span><br><span class="line">      }</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    }</span><br><span class="line">  } <span class="keyword">else</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">eval</span>(funcString);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="comment">//&#x514B;&#x9686;&#x5176;&#x4ED6;&#x7C7B;&#x578B;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneOtherType</span>(<span class="params">targe, type</span>) </span>{</span><br><span class="line">  <span class="keyword">const</span> Ctor = targe.constructor;</span><br><span class="line">  <span class="keyword">switch</span> (type) {</span><br><span class="line">    <span class="keyword">case</span> boolTag:</span><br><span class="line">    <span class="keyword">case</span> numberTag:</span><br><span class="line">    <span class="keyword">case</span> stringTag:</span><br><span class="line">    <span class="keyword">case</span> errorTag:</span><br><span class="line">    <span class="keyword">case</span> dateTag:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Ctor(targe);</span><br><span class="line">    <span class="keyword">case</span> regexpTag:</span><br><span class="line">      <span class="keyword">return</span> cloneReg(targe);</span><br><span class="line">    <span class="keyword">case</span> symbolTag:</span><br><span class="line">      <span class="keyword">return</span> cloneSymbol(targe);</span><br><span class="line">    <span class="keyword">case</span> funcTag:</span><br><span class="line">      <span class="keyword">return</span> cloneFunction(targe);</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">target, map = new WeakMap(</span>)) </span>{</span><br><span class="line">  <span class="comment">// &#x514B;&#x9686;&#x539F;&#x59CB;&#x7C7B;&#x578B;</span></span><br><span class="line">  <span class="keyword">if</span> (!isObject(target)) {</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// &#x521D;&#x59CB;&#x5316;</span></span><br><span class="line">  <span class="keyword">const</span> type = getType(target);</span><br><span class="line">  <span class="keyword">let</span> cloneTarget;</span><br><span class="line">  <span class="keyword">if</span> (deepTag.includes(type)) {</span><br><span class="line">    cloneTarget = getInit(target, type);</span><br><span class="line">  } <span class="keyword">else</span> {</span><br><span class="line">    <span class="keyword">return</span> cloneOtherType(target, type);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// &#x9632;&#x6B62;&#x5FAA;&#x73AF;&#x5F15;&#x7528;</span></span><br><span class="line">  <span class="keyword">if</span> (map.get(target)) {</span><br><span class="line">    <span class="keyword">return</span> map.get(target);</span><br><span class="line">  }</span><br><span class="line">  map.set(target, cloneTarget);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// &#x514B;&#x9686;set</span></span><br><span class="line">  <span class="keyword">if</span> (type === setTag) {</span><br><span class="line">    target.forEach(<span class="function"><span class="params">value</span> =&gt;</span> {</span><br><span class="line">      cloneTarget.add(clone(value, map));</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// &#x514B;&#x9686;map</span></span><br><span class="line">  <span class="keyword">if</span> (type === mapTag) {</span><br><span class="line">    target.forEach(<span class="function">(<span class="params">value, key</span>) =&gt;</span> {</span><br><span class="line">      cloneTarget.set(key, clone(value, map));</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// &#x514B;&#x9686;&#x5BF9;&#x8C61;&#x548C;&#x6570;&#x7EC4;</span></span><br><span class="line">  <span class="keyword">const</span> keys = type === arrayTag ? <span class="literal">undefined</span> : <span class="built_in">Object</span>.keys(target);</span><br><span class="line">  forEach(keys || target, (value, key) =&gt; {</span><br><span class="line">    <span class="keyword">if</span> (keys) {</span><br><span class="line">      key = value;</span><br><span class="line">    }</span><br><span class="line">    cloneTarget[key] = clone(target[key], map);</span><br><span class="line">  });</span><br><span class="line">  <span class="keyword">return</span> cloneTarget;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4EE5;&#x4E0A;&#x4EE3;&#x7801;&#x517C;&#x5BB9;&#x4E86;&#x5BF9;&#x8C61;&#x3001;&#x6570;&#x7EC4;&#x3001;Symbol&#x3001;&#x6B63;&#x5219;&#x3001;Error&#x3001;Date&#x3001;&#x57FA;&#x7840;&#x7C7B;&#x578B;&#x3002;&#x6700;&#x5F3A;&#x7248;&#x6DF1;&#x62F7;&#x8D1D;&#x3002;</p>
+</li>
+</ul>
+<h4 id="&#x6A21;&#x62DF;&#x5B9E;&#x73B0;call-apply-bind&#x51FD;&#x6570;"><a href="#&#x6A21;&#x62DF;&#x5B9E;&#x73B0;call-apply-bind&#x51FD;&#x6570;" class="headerlink" title="&#x6A21;&#x62DF;&#x5B9E;&#x73B0;call,apply,bind&#x51FD;&#x6570;"></a>&#x6A21;&#x62DF;&#x5B9E;&#x73B0;call,apply,bind&#x51FD;&#x6570;</h4><h5 id="&#x51FD;&#x6570;bind&#x5B9E;&#x73B0;&#xFF1A;"><a href="#&#x51FD;&#x6570;bind&#x5B9E;&#x73B0;&#xFF1A;" class="headerlink" title="&#x51FD;&#x6570;bind&#x5B9E;&#x73B0;&#xFF1A;"></a>&#x51FD;&#x6570;bind&#x5B9E;&#x73B0;&#xFF1A;</h5><blockquote>
+<p>bind() &#x65B9;&#x6CD5;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x51FD;&#x6570;&#x3002;&#x5F53;&#x8FD9;&#x4E2A;&#x65B0;&#x51FD;&#x6570;&#x88AB;&#x8C03;&#x7528;&#x65F6;&#xFF0C;bind() &#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5C06;&#x4F5C;&#x4E3A;&#x5B83;&#x8FD0;&#x884C;&#x65F6;&#x7684; this&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x4E00;&#x5E8F;&#x5217;&#x53C2;&#x6570;&#x5C06;&#x4F1A;&#x5728;&#x4F20;&#x9012;&#x7684;&#x5B9E;&#x53C2;&#x524D;&#x4F20;&#x5165;&#x4F5C;&#x4E3A;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x3002;(&#x6765;&#x81EA;&#x4E8E; MDN )<br>&#x7531;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x9996;&#x5148;&#x5F97;&#x51FA; bind &#x51FD;&#x6570;&#x7684;&#x4E24;&#x4E2A;&#x7279;&#x70B9;:<br>1.&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x51FD;&#x6570;<br>2.&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x53C2;&#x6570;</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>{</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">&quot;function&quot;</span>) {</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="comment">//&#x83B7;&#x53D6;bind&#x51FD;&#x6570;&#x4ECE;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x5230;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF08;&#x63A5;&#x6536;&#x9664;context&#x4E4B;&#x5916;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x7ED1;&#x5B9A;&#x7684;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#xFF09;</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fNOP = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{};</span><br><span class="line">    <span class="comment">// let args = [...arguments].slice(1)</span></span><br><span class="line">    <span class="keyword">var</span> fBound = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="comment">// let bindArgs = Array.prototype.slice.call(arguments);</span></span><br><span class="line">        <span class="keyword">var</span> bindArgs = args.concat([...arguments]) <span class="comment">//&#x5C06;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x548C;&#x8C03;&#x7528;&#x53C2;&#x6570;&#x5408;&#x5E76;</span></span><br><span class="line">        <span class="keyword">return</span> self.apply(<span class="keyword">this</span> <span class="keyword">instanceof</span> fNOP ? <span class="keyword">this</span>: context,bindArgs)</span><br><span class="line">    }</span><br><span class="line">    fNOP.prototype = <span class="keyword">this</span>.prototype</span><br><span class="line">    fBound.prototype = <span class="keyword">new</span> fNOP();</span><br><span class="line">    <span class="keyword">return</span> fBound;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h5 id="&#x51FD;&#x6570;call&#x5B9E;&#x73B0;&#xFF1A;"><a href="#&#x51FD;&#x6570;call&#x5B9E;&#x73B0;&#xFF1A;" class="headerlink" title="&#x51FD;&#x6570;call&#x5B9E;&#x73B0;&#xFF1A;"></a>&#x51FD;&#x6570;call&#x5B9E;&#x73B0;&#xFF1A;</h5><blockquote>
+<p>call() &#x65B9;&#x6CD5;&#x5728;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x6307;&#x5B9A;&#x7684; this &#x503C;&#x548C;&#x82E5;&#x5E72;&#x4E2A;&#x6307;&#x5B9A;&#x7684;&#x53C2;&#x6570;&#x503C;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#x8C03;&#x7528;&#x67D0;&#x4E2A;&#x51FD;&#x6570;&#x6216;&#x65B9;&#x6CD5;&#x3002;<br> 1.call&#x6539;&#x53D8;&#x4E86;this&#x7684;&#x6307;&#x5411;<br> 2.&#x7ACB;&#x5373;&#x8C03;&#x7528;&#x4E86;&#x51FD;&#x6570;</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>{</span><br><span class="line">    <span class="keyword">var</span> context = context || <span class="built_in">window</span></span><br><span class="line"></span><br><span class="line">    context.fn = <span class="keyword">this</span>;<span class="comment">// &#x9996;&#x5148;&#x8981;&#x83B7;&#x53D6;&#x8C03;&#x7528;call&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x7528;this&#x53EF;&#x4EE5;&#x83B7;&#x53D6;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> args = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>,len = <span class="built_in">arguments</span>.length; i&lt;len;i++ ){</span><br><span class="line">        args.push(<span class="string">&apos;arguments[&apos;</span>+i+<span class="string">&apos;]&apos;</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">var</span> result = <span class="built_in">eval</span>(<span class="string">&apos;context.fn(&apos;</span>+ args +<span class="string">&apos;)&apos;</span>)</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">delete</span> context.fn;<span class="comment">//&#x5220;&#x9664;&#x8BE5;&#x51FD;&#x6570;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6 &#x5B9E;&#x73B0;&#x65B9;&#x5F0F;</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall1 = <span class="function"><span class="keyword">function</span>(<span class="params">context,...args</span>)</span>{</span><br><span class="line">    <span class="keyword">var</span> context = context || <span class="built_in">window</span></span><br><span class="line">    context.fn = <span class="keyword">this</span>;<span class="comment">// &#x9996;&#x5148;&#x8981;&#x83B7;&#x53D6;&#x8C03;&#x7528;call&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x7528;this&#x53EF;&#x4EE5;&#x83B7;&#x53D6;</span></span><br><span class="line">    <span class="keyword">var</span> result = context.fn(...args)</span><br><span class="line">    <span class="keyword">delete</span> context.fn;<span class="comment">//&#x5220;&#x9664;&#x8BE5;&#x51FD;&#x6570;</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h5 id="&#x51FD;&#x6570;apply&#x5B9E;&#x73B0;&#xFF1A;"><a href="#&#x51FD;&#x6570;apply&#x5B9E;&#x73B0;&#xFF1A;" class="headerlink" title="&#x51FD;&#x6570;apply&#x5B9E;&#x73B0;&#xFF1A;"></a>&#x51FD;&#x6570;apply&#x5B9E;&#x73B0;&#xFF1A;</h5><blockquote>
+<p>apply&#x65B9;&#x6CD5;&#x529F;&#x80FD;&#x4E0E;call&#x4E00;&#x6837;&#x53EA;&#x4E0D;&#x8FC7;&#x63A5;&#x53D7;&#x7684;&#x53C2;&#x6570;&#x4E3A;&#x6570;&#x7EC4;</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">Function</span>.prototype.apply = <span class="function"><span class="keyword">function</span> (<span class="params">context, arr</span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> context = <span class="built_in">Object</span>(context) || <span class="built_in">window</span>;</span><br><span class="line">    context.fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> result;</span><br><span class="line">    <span class="keyword">if</span> (!arr) {</span><br><span class="line">        result = context.fn();</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">var</span> args = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = arr.length; i &lt; len; i++) {</span><br><span class="line">            args.push(<span class="string">&apos;arr[&apos;</span> + i + <span class="string">&apos;]&apos;</span>);</span><br><span class="line">        }</span><br><span class="line">        result = <span class="built_in">eval</span>(<span class="string">&apos;context.fn(&apos;</span> + args + <span class="string">&apos;)&apos;</span>)</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">delete</span> context.fn</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"> <span class="comment">//ES6 &#x5B9E;&#x73B0;&#x65B9;&#x5F0F;</span></span><br><span class="line"> <span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span>(<span class="params">context,args=[]</span>)</span>{</span><br><span class="line">     <span class="keyword">var</span> context = context || <span class="built_in">window</span></span><br><span class="line">     context.fn = <span class="keyword">this</span>;</span><br><span class="line">     <span class="keyword">var</span> result = context.fn(...args)</span><br><span class="line">     <span class="keyword">delete</span> context.fn;<span class="comment">//&#x5220;&#x9664;&#x8BE5;&#x51FD;&#x6570;</span></span><br><span class="line">     <span class="keyword">return</span> result</span><br><span class="line"> }</span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x6A21;&#x62DF;&#x5B9E;&#x73B0;new&#x64CD;&#x4F5C;&#x7B26;"><a href="#&#x6A21;&#x62DF;&#x5B9E;&#x73B0;new&#x64CD;&#x4F5C;&#x7B26;" class="headerlink" title="&#x6A21;&#x62DF;&#x5B9E;&#x73B0;new&#x64CD;&#x4F5C;&#x7B26;"></a>&#x6A21;&#x62DF;&#x5B9E;&#x73B0;new&#x64CD;&#x4F5C;&#x7B26;</h4><blockquote>
+<p>new &#x8FD0;&#x7B97;&#x7B26;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x5B9A;&#x4E49;&#x7684;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x7684;&#x5B9E;&#x4F8B;&#x6216;&#x5177;&#x6709;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x5185;&#x7F6E;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x4E4B;&#x4E00;</p>
+</blockquote>
+<p> new&#x64CD;&#x4F5C;&#x7B26;&#x505A;&#x4E86;&#x8FD9;&#x4E9B;&#x4E8B;&#xFF1A;</p>
+<ul>
+<li><p>&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x5168;&#x65B0;&#x7684;&#x5BF9;&#x8C61;&#x3002;</p>
+</li>
+<li><p>&#x88AB;&#x6267;&#x884C;[[Prototype]]&#xFF08;&#x4E5F;&#x5C31;&#x662F;<strong>proto</strong>&#xFF09;&#x94FE;&#x63A5;&#x3002;</p>
+</li>
+<li><p>&#x4F7F;this&#x6307;&#x5411;&#x65B0;&#x521B;&#x5EFA;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x3002;</p>
+</li>
+<li><p>&#x901A;&#x8FC7;new&#x521B;&#x5EFA;&#x7684;&#x6BCF;&#x4E2A;&#x5BF9;&#x8C61;&#x5C06;&#x6700;&#x7EC8;&#x88AB;[[Prototype]]&#x94FE;&#x63A5;&#x5230;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x7684;prototype&#x5BF9;&#x8C61;&#x4E0A;&#x3002;</p>
+</li>
+<li><p>&#x5982;&#x679C;&#x51FD;&#x6570;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;Object(&#x5305;&#x542B;Functoin, Array, Date, RegExg, Error)&#xFF0C;&#x90A3;&#x4E48;new&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x5C06;&#x8FD4;&#x56DE;&#x8BE5;&#x5BF9;&#x8C61;&#x5F15;&#x7528;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">New</span>(<span class="params">fn</span>)</span>{</span><br><span class="line">    <span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">    obj.__proto__ = fn.prototype;</span><br><span class="line">    <span class="comment">// &#x5C06; arguments &#x5BF9;&#x8C61;&#x8F6C;&#x4E3A;&#x6570;&#x7EC4;</span></span><br><span class="line">    <span class="keyword">var</span> args = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="comment">//&#x53BB;&#x9664;&#x6784;&#x9020;&#x51FD;&#x6570;</span></span><br><span class="line">    args.shift();</span><br><span class="line">    <span class="comment">// &#x6267;&#x884C;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5E76;&#x6539;&#x53D8;this&#x5BF9;&#x8C61;</span></span><br><span class="line">    <span class="keyword">var</span> result = fn.apply(obj, args);</span><br><span class="line">    <span class="keyword">if</span>((<span class="keyword">typeof</span> result === <span class="string">&apos;object&apos;</span> || <span class="keyword">typeof</span> result === <span class="string">&apos;function&apos;</span> ) &amp;&amp; result !== <span class="literal">null</span>){</span><br><span class="line">       <span class="keyword">return</span> result</span><br><span class="line">    }<span class="keyword">else</span>{</span><br><span class="line">       <span class="keyword">return</span> obj;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">}</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+    
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">----------------本文结束<i class="fa fa-heart"></i>感谢阅读----------------</div>
+    
+</div>
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/19/ES2020/" rel="next" title="ES2020(ES10)新特性整理">
+                  <i class="fa fa-chevron-left"></i> ES2020(ES10)新特性整理
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现浅拷贝和深拷贝"><span class="nav-number">1.</span> <span class="nav-text">实现浅拷贝和深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#浅拷贝实现方式："><span class="nav-number">1.1.</span> <span class="nav-text">浅拷贝实现方式：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-直接赋值"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.直接赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-Object-assign"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.Object.assign()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-Array-prototype-slice-和Array-prototype-concat"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.Array.prototype.slice()和Array.prototype.concat()</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#深拷贝实现方式："><span class="nav-number">1.2.</span> <span class="nav-text">深拷贝实现方式：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-通过JSON转换来实现"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.通过JSON转换来实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-通过递归来实现"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.通过递归来实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟实现call-apply-bind函数"><span class="nav-number">2.</span> <span class="nav-text">模拟实现call,apply,bind函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#函数bind实现："><span class="nav-number">2.1.</span> <span class="nav-text">函数bind实现：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#函数call实现："><span class="nav-number">2.2.</span> <span class="nav-text">函数call实现：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#函数apply实现："><span class="nav-number">2.3.</span> <span class="nav-text">函数apply实现：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟实现new操作符"><span class="nav-number">3.</span> <span class="nav-text">模拟实现new操作符</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Yaw Chen"
+    src="https://avatars3.githubusercontent.com/u/17722082?s=460&amp;v=4">
+  <p class="site-author-name" itemprop="name">Yaw Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dggrok" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;dggrok" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:13641772927@163.com" title="E-Mail &amp;rarr; mailto:13641772927@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020-03-25</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yaw Chen</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.6' zIndex='-1' count='120' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小桃心-->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
+
